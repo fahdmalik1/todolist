@@ -4,6 +4,7 @@ var divContainer = document.getElementById("list-container");
 
 inputButton.addEventListner("click", function(){
 	addNewTask();
+	console.log("eventadded");
 })
 
 var inputArray = [];
