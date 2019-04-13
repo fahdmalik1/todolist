@@ -57,15 +57,36 @@ function formatTodo(item) {
 	listItem.appendChild(itemTwo);
 	listItem.setAttribute('id', item.id);
 	
+	var markButton = document.createElement('button');
+	var buttonText = document.createTextNode('mark status');
+	
+	markButton.appendChild(buttonText);
+	markButton.addEventListener('click', function(event) {
+		markAsDone(event.target.parentElement.id)
+
+	} )
+	
+	listItem.appendChild(markButton);
+	
 	return listItem;
+}
+
+function markAsDone(itemId) {
+	var toMark = todoArray[itemId-1];
+	toMark.done = !toMark.done;
+	updateTodosView();
 }
 
 function updateTodosView() {
 	var list= document.createElement("ul");
 	
 	todoArray.forEach(function(item) {
+		if (item.done) {
+			item.setAttribute('class', 'item-done');
+		} else {
+			item.setAttribute('class', 'item-todo');
+		}
 		list.appendChild(item );
-		
 	})
 	listArea.replaceChild(list, listArea.firstChild);
 }
