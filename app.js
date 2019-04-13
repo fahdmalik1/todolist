@@ -1,32 +1,57 @@
 var taskInput = document.getElementById("new-task");
-var inputButton = document.getElementById("add-task");
-var divContainer = document.getElementById("list-container");
+var addButton = document.getElementById("new-task-button");
+var listArea = document.getElementById("list-container");
 
-inputButton.addEventListener("click", function(){
+addButton.addEventListener("click", function(){
 	addNewTask();
 	console.log("eventadded");
 })
 
-var inputArray = [];
+var todoArray = [];
 
 function addNewTask() {
 	
 	var date = new Date();
 	
 	var task = taskInput.value;
+	console.log(task);
 	
 	var todo = {
-		id : inputArray.length + 1,
+		id : todoArray.length + 1,
 		task : task,
 		date : date.toUTCString(),
 		done : false
 	};
 	
-	inputArray.push(todo.task);
-	inputArray.forEach(function(item){
-		list-container.appendChild("<p>" + item + "</p>");
-	})
+	var todoElement = formatTodo(todo);
+	
+	todoArray.push(todoElement);
+	
+	updateTodosView();
+	
 	taskInput.value = "";
 	
 	
+}
+
+function formatTodo(item) {
+	var listItem = document.createElement('li');
+	var itemContent = document.createElement('span');
+	var taskContent = document.createTextNode(item.task);
+	
+	itemContent.appendChild(taskContent);
+	listItem.appendChild(itemContent);
+	listItem.setAttribute('id', item.id);
+	
+	return listItem;
+}
+
+function updateTodosView() {
+	var list= document.createElement("ul");
+	
+	todoArray.forEach(function(item) {
+		list.appendChild(item );
+		
+	})
+	listArea.replaceChild(list, listArea.firstChild);
 }
